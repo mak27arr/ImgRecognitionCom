@@ -22,7 +22,7 @@ namespace TextRecognitionComObject.Classes
                 Strategy = IronOcr.AdvancedOcr.OcrStrategy.Advanced,
                 ColorSpace = AdvancedOcr.OcrColorSpace.Color,
                 DetectWhiteTextOnDarkBackgrounds = true,
-                InputImageType = AdvancedOcr.InputTypes.Document,
+                InputImageType = AdvancedOcr.InputTypes.AutoDetect,
                 RotateAndStraighten = true,
                 ReadBarCodes = true,
                 ColorDepth = 4
