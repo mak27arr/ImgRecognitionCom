@@ -16,7 +16,7 @@ namespace TextRecognitionComObject.Classes
             string tessPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "");
             string result = "";
 
-            using (var engine = new TesseractEngine(tessPath, "ukr", EngineMode.Default))
+            using (var engine = new TesseractEngine(tessPath, "eng+ukr", EngineMode.Default))
             {
                 using (var img = Pix.LoadFromFile(patch))
                 {

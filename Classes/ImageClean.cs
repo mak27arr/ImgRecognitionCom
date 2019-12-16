@@ -11,71 +11,87 @@ namespace TextRecognitionComObject.Classes
 {
     public class ImageClean : IImageClener
     {
-        public byte[] CleanLowThen(byte[] img,int r,int g,int b)
+        public byte[] CleanLowThen(byte[] img,int r,int g,int b, ImageFormat type)
         {
             byte[] result;
             MemoryStream buf = new MemoryStream(img);
-            Image image = Image.FromStream(buf, true);
-            using (Graphics gra = Graphics.FromImage(image))
+            using (Bitmap bmp = new Bitmap(buf))
             {
-                for(int ri = 0; ri < r; ri++)
+                for (int i = 0; i <= bmp.Width - 1; i++)
                 {
-                    for (int gi = 0; gi < g; gi++)
+                    for (int j = 0; j < bmp.Height - 1; j++)
                     {
-                        for (int bi = 0; bi < b; bi++)
+                        var pixel = bmp.GetPixel(i, j);
+                        if (pixel.R < r && pixel.G < g && pixel.B < b)
                         {
-                            gra.Clear(Color.FromArgb(ri, gi, bi));
+                            bmp.SetPixel(i, j, Color.FromArgb(255, 255, 255, 255));
                         }
                     }
                 }
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bmp.Save(ms, type);
+                    result = ms.ToArray();
+                }
             }
-            using (MemoryStream ms = new MemoryStream())
-            {
-                image.Save(ms, ImageFormat.Png);
-                result = ms.ToArray();
-            }
+
             return result;
         }
 
-        public byte[] CleanHiThen(byte[] img, int r, int g, int b)
+        public byte[] CleanHiThen(byte[] img, int r, int g, int b, ImageFormat type)
         {
             byte[] result;
-            //MemoryStream buf = new MemoryStream(img);
-            //Image image = Image.FromStream(buf, true);
-            //using (Graphics gra = Graphics.FromImage(image))
-            //{
-            //for (int ri = r; ri < 255; ri++)
-            //{
-            //    for (int gi = g; gi < 255; gi++)
-            //    {
-            //        for (int bi = b; bi < 255; bi++)
-            //        {
-            //            gra.Clear(Color.FromArgb(ri, gi, bi));
-            //        }
-            //    }
-            //}
-            //}
             MemoryStream buf = new MemoryStream(img);
-            Image image = Image.FromStream(buf, true);
-            using (Graphics gra = Graphics.FromImage(image))
+            using (Bitmap bmp = new Bitmap(buf))
             {
-                Parallel.For(r, 256, ri =>
+                for (int i = 0; i <= bmp.Width - 1; i++)
                 {
-                    Parallel.For(g, 256, gi =>
-                    {
-                        for (int bi = b; bi < 255; bi++)
-                        {
-                            gra.Clear(Color.FromArgb(ri, gi, bi));
+                    for (int j = 0; j < bmp.Height - 1; j++) { 
+                        var pixel = bmp.GetPixel(i, j);
+                        if (pixel.R>r&& pixel.G > g && pixel.B > b) {
+                            bmp.SetPixel(i, j, Color.FromArgb(255,255,255,255));
                         }
-                    });
-                });
+                    }
+                }
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bmp.Save(ms, type);
+                    result = ms.ToArray();
+                }
             }
 
-            using (MemoryStream ms = new MemoryStream())
+            return result;
+        }
+
+        public byte[] KeepGray(byte[] img, int precent, ImageFormat type)
+        {
+            byte[] result;
+            MemoryStream buf = new MemoryStream(img);
+            using (Bitmap bmp = new Bitmap(buf))
             {
-                image.Save(ms, ImageFormat.Png);
-                result = ms.ToArray();
+                for (int i = 0; i <= bmp.Width - 1; i++)
+                {
+                    for (int j = 0; j < bmp.Height - 1; j++)
+                    {
+                        var pixel = bmp.GetPixel(i, j);
+                        if (pixel.G - precent > pixel.R || pixel.R > pixel.G + precent ||
+                            pixel.B - precent > pixel.R || pixel.R > pixel.B + precent ||
+                            pixel.R - precent > pixel.G || pixel.G > pixel.R + precent ||
+                            pixel.B - precent > pixel.G || pixel.G > pixel.B + precent ||
+                            pixel.G - precent > pixel.B || pixel.B > pixel.G + precent ||
+                            pixel.R - precent > pixel.B || pixel.B > pixel.R + precent)
+                        {
+                            bmp.SetPixel(i, j, Color.FromArgb(255, 255, 255, 255));
+                        }
+                    }
+                }
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bmp.Save(ms, type);
+                    result = ms.ToArray();
+                }
             }
+
             return result;
         }
 
