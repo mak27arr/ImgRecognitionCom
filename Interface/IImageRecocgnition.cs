@@ -9,7 +9,6 @@ namespace TextRecognitionComObject.Interface
     interface IImageRecocgnition
     {
         public string ImgRecognition(string patch);
-        public string ImgRecognition(byte [,] image);
-        public string ImgRecognition(Bitmap image);
+
     }
 }

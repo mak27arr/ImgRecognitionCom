@@ -6,9 +6,11 @@ using System.Text;
 using TextRecognitionComObject.Interface;
 using Tesseract;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace TextRecognitionComObject.Classes
 {
+    [Guid("84496E60-23F3-4E07-9099-39BD2FA12323")]
     public class ImageRecognitionT : IImageRecocgnition
     {
         public string ImgRecognition(string patch)
@@ -27,17 +29,5 @@ namespace TextRecognitionComObject.Classes
             }
             return String.IsNullOrWhiteSpace(result) ? "Ocr is finished. Return empty" : result;
         }
-
-        public string ImgRecognition(byte[,] image)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ImgRecognition(Bitmap image)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

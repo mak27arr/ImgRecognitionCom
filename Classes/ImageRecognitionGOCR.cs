@@ -1,10 +1,12 @@
 ﻿using Google.Cloud.Vision.V1;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace TextRecognitionComObject.Classes
 {
+    [Guid("84496E60-23F3-4E07-9099-39BD2FA12323")]
     public class ImageRecognitionGOCR
     {
         public ImageRecognitionGOCR(string patch)
@@ -27,14 +29,5 @@ namespace TextRecognitionComObject.Classes
             return full_text;
         }
 
-        public string ImgRecognition(byte[,] image)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ImgRecognition(System.Drawing.Bitmap image)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
