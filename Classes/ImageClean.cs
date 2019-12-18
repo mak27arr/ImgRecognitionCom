@@ -86,6 +86,12 @@ namespace TextRecognitionComObject.Classes
                         {
                             bmp.SetPixel(i, j, Color.FromArgb(255, 255, 255, 255));
                         }
+                        else
+                        {
+                            //if () {
+                            //    bmp.SetPixel(i, j, Color.FromArgb(255, 0, 0, 0));
+                            //}
+                        }
                     }
                 }
                 using (MemoryStream ms = new MemoryStream())

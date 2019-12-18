@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -28,6 +29,34 @@ namespace TextRecognitionComObject.Classes
             File.Delete(img_url);
 
             return ir.ImgRecognition(img_url);
+        }
+        public bool ConvertPDFToImg(string pdf_url, string img_url,int page)
+        {
+            if (File.Exists(pdf_url))
+            {
+                TiffImage myTiff = new TiffImage(pdf_url);
+                if (myTiff.myImages.Count >= page)
+                {
+                    var img = myTiff.myImages[page] as Bitmap;
+                    if (img != null)
+                    {
+                        img.Save(img_url, ImageFormat.Tiff);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
