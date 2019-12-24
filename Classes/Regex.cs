@@ -16,6 +16,7 @@ namespace TextRecognitionComObject.Classes
         {
             Regex r = new Regex();
             return r.Match(str, pattern, symbol);
+
         }
     }
 }
